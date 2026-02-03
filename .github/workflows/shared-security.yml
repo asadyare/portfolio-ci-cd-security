@@ -1,0 +1,25 @@
+name: shared-security
+
+on:
+  workflow_call:
+
+jobs:
+  lint:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+  dependency-scan:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: aquasecurity/trivy-action@0.20.0
+
+  secrets-scan:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: gitleaks/gitleaks-action@v2.3.6
+
+  sbom:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: anchore/sbom-action@v0.15.9
