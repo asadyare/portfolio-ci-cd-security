@@ -2,24 +2,62 @@ name: shared-security
 
 on:
   workflow_call:
+    inputs:
+      node-version:
+        required: true
+        type: string
+      docker-context:
+        required: true
+        type: string
+      image-name:
+        required: true
+        type: string
+
+permissions:
+  contents: read
+  security-events: write
 
 jobs:
-  lint:
+  security:
     runs-on: ubuntu-latest
+
     steps:
       - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
 
-  dependency-scan:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: aquasecurity/trivy-action@0.20.0
+      - uses: actions/setup-node@v4
+        with:
+          node-version: ${{ inputs.node-version }}
+          cache: npm
 
-  secrets-scan:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: gitleaks/gitleaks-action@v2.3.6
+      - run: npm ci
 
-  sbom:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: anchore/sbom-action@v0.15.9
+      - name: NPM audit
+        run: npm audit --audit-level=high
+
+      - name: Gitleaks
+        uses: gitleaks/gitleaks-action@v2
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+        with:
+          args: detect --redact --report-format sarif --report-path gitleaks.sarif
+
+      - name: Semgrep
+        uses: returntocorp/semgrep-action@v1
+        with:
+          config: p/javascript
+
+      - name: Build image
+        run: |
+          docker build \
+            -t ${{ inputs.image-name }}:${{ github.sha }} \
+            ${{ inputs.docker-context }}
+
+      - name: Trivy image scan
+        uses: aquasecurity/trivy-action@0.20.0
+        with:
+          image-ref: ${{ inputs.image-name }}:${{ github.sha }}
+          severity: HIGH,CRITICAL
+          exit-code: 1
+          ignore-unfixed: true
