@@ -20,6 +20,11 @@ The goal of this repository is to enforce security by default across all project
 
 This repository functions as a shared security center. Downstream repositories trigger workflows from this repo instead of defining security logic locally. Results and evidence remain visible in the calling repository Actions logs.
 
+### Diagram
+
+CI and Security Architecture Diagram
+[![CI/CD Security Architecture](diagrams/architecture.png)](diagrams/architecture.png)
+
 ## Connected Repositories
 
 1. [Frontend application](https://github.com/asadyare/portfolio-frontend)
@@ -32,11 +37,6 @@ Repositories invoke shared workflows using GitHub Actions workflow calls.
 Security logic executes centrally.
 Results propagate back to the caller pipeline.
 Failed checks block merge or deployment.
-
-## Diagram
-
-CI and Security Architecture Diagram
-[![CI/CD Security Architecture](diagrams/architecture.png)](diagrams/architecture.png)
 
 ## Central Portfolio Reference
 
