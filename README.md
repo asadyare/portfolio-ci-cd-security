@@ -1,8 +1,51 @@
 # Reusable CI and Security Workflows
 
+[![Daily Security](https://github.com/asadyare/portfolio-daily-security/actions/workflows/security-alerting-and-reporting.yml/badge.svg)](https://github.com/asadyare/portfolio-daily-security/actions/workflows/security-alerting-and-reporting.yml)
+
+![Weekly Report](https://img.shields.io/badge/reporting-weekly-blue)
+
+![Alerting](https://img.shields.io/badge/alerting-critical--only-red)
+
 ## Overview
 
-This repository acts as the shared security and CI control plane for the entire DevSecOps portfolio. It centralises security enforcement, CI logic, and policy checks used across multiple repositories through GitHub Actions workflow calls. This design removes duplication, enforces consistency, and provides a single source of truth for security controls.
+This repository acts as the shared CI and security control plane for the portfolio. It provides reusable workflows consumed by application and infrastructure repositories to enforce security controls consistently.
+
+### Central Security Model
+
+This repository focuses on security at pull request and deployment time. Ongoing and post merge security monitoring is handled by a dedicated daily security repository.
+
+### Security Responsibilities
+
+- CI and Deployment Security
+- Pull request security scanning
+- Deployment time container and dependency checks
+- Reusable workflows enforced via workflow calls
+
+### Post Merge and Continuous Security
+
+Daily and weekly security monitoring runs outside CI pipelines
+Critical findings trigger automatic alerts
+Weekly security posture reports provide governance visibility
+
+### Daily and Weekly Security Integration
+
+Continuous security monitoring is implemented in the portfolio-daily-security repository.
+This model ensures newly disclosed vulnerabilities are detected even when no code changes occur.
+
+#### Daily scans
+
+Run on a fixed schedule
+Detect new CVEs, dependency disclosures, and container risks
+
+#### Alerting
+
+Critical findings automatically create GitHub Issues
+Alerts link directly to scan evidence
+
+#### Weekly reporting
+
+A weekly security report issue summarises coverage and execution
+Provides a clear audit trail for reviewers
 
 ## Purpose
 
