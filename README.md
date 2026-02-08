@@ -1,19 +1,54 @@
-# Reusable CI and security workflows
+# Reusable CI and Security Workflows
 
-Reusable CI and security workflows
+## Overview
 
-## Table of Contents
+This repository acts as the shared security and CI control plane for the entire DevSecOps portfolio. It centralises security enforcement, CI logic, and policy checks used across multiple repositories through GitHub Actions workflow calls. This design removes duplication, enforces consistency, and provides a single source of truth for security controls.
+
+## Purpose
+
+The goal of this repository is to enforce security by default across all projects. Any repository consuming these workflows inherits the same security standards without copying logic or configuration.
+
+- Core Capabilities
+- Secret scanning across source code and commits
+- Static application security testing for application code
+- Dependency vulnerability scanning
+- Container image scanning during build pipelines
+- Fail fast enforcement for pull requests and main branch deployments
+- Reusable workflows consumed through workflow_call
+
+## Architecture Model
+
+This repository functions as a shared security center. Downstream repositories trigger workflows from this repo instead of defining security logic locally. Results and evidence remain visible in the calling repository Actions logs.
+
+## Connected Repositories
 
 1. [Frontend application](https://github.com/asadyare/portfolio-frontend)
-2. [Threat modeling and risk analysis](https://github.com/asadyare/portfolio-threat-model)
-3. [Kubernetes Deployment and security](https://github.com/asadyare/portfolio-k8s-microservices-deployment)
-4. [Daily security automation](https://github.com/asadyare/portfolio-daily-security)
 
+2. [Kubernetes Deployment and security](https://github.com/asadyare/portfolio-k8s-microservices-deployment)
+3. [Daily security automation](https://github.com/asadyare/portfolio-daily-security)
+
+Workflow Consumption Pattern
+Repositories invoke shared workflows using GitHub Actions workflow calls.
+Security logic executes centrally.
+Results propagate back to the caller pipeline.
+Failed checks block merge or deployment.
+
+## Diagram
+
+CI and Security Architecture Diagram
 [![CI/CD Security Architecture](diagrams/architecture.png)](diagrams/architecture.png)
 
-## Central Repo
+## Central Portfolio Reference
 
+Primary portfolio index and documentation
 [Central reposittory](https://github.com/asadyare/devsecops-portfolio-asad)
+
+Operational Benefits
+Single place to update security tooling
+Consistent enforcement across projects
+Clear audit trail inside GitHub Actions
+Reduced configuration drift
+Portfolio wide security posture visibility
 
 ## Contact
 
