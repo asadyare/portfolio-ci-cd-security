@@ -1,10 +1,10 @@
 # Reusable CI and Security Workflows
 
+[![CI Security](https://github.com/asadyare/portfolio-ci-cd-security/actions/workflows/ci-security.yml/badge.svg)](https://github.com/asadyare/portfolio-ci-cd-security/actions/workflows/ci-security.yml)
+
 [![Daily Security](https://github.com/asadyare/portfolio-daily-security/actions/workflows/security-alerting-and-reporting.yml/badge.svg)](https://github.com/asadyare/portfolio-daily-security/actions/workflows/security-alerting-and-reporting.yml)
 
-![Weekly Report](https://img.shields.io/badge/reporting-weekly-blue)
-
-![Alerting](https://img.shields.io/badge/alerting-critical--only-red)
+[![Runtime Security Falco](https://img.shields.io/badge/Runtime%20Security-Falco%20Enabled-brightgreen)](https://falco.org/)
 
 ## Overview
 
