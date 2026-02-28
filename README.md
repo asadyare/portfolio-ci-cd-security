@@ -71,9 +71,9 @@ CI and Security Architecture Diagram
 ## Connected Repositories
 
 1. [Frontend application](https://github.com/asadyare/portfolio-frontend)
-
-2. [Kubernetes Deployment and security](https://github.com/asadyare/portfolio-k8s-microservices-deployment)
-3. [Daily security automation](https://github.com/asadyare/portfolio-daily-security)
+2. [Kubernetes Deployment and security](https://github.com/asadyare/portfolio-k8s-security)
+3. [Threat modeling and risk analysis](https://github.com/asadyare/portfolio-threat-model)
+4. [Daily security automation](https://github.com/asadyare/portfolio-daily-security)
 
 Workflow Consumption Pattern
 Repositories invoke shared workflows using GitHub Actions workflow calls.
@@ -84,7 +84,7 @@ Failed checks block merge or deployment.
 ## Central Portfolio Reference
 
 Primary portfolio index and documentation
-[Central reposittory](https://github.com/asadyare/devsecops-portfolio-asad)
+[Central repository](https://github.com/asadyare/devsecops-portfolio-asad)
 
 Operational Benefits
 Single place to update security tooling
