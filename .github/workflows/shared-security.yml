@@ -12,6 +12,12 @@ on:
       image-name:
         required: true
         type: string
+      dockerfile-repo:
+        required: false
+        type: string
+      dockerfile-path:
+        required: false
+        type: string
 
 permissions:
   contents: read
@@ -48,11 +54,23 @@ jobs:
         with:
           config: p/javascript
 
+      - name: Build application
+        run: npm run build
+
+      - name: Checkout Dockerfile repo
+        if: inputs.dockerfile-repo != ''
+        uses: actions/checkout@v4
+        with:
+          repository: ${{ inputs.dockerfile-repo }}
+          path: dockerfile-repo
+
       - name: Build image
         run: |
-          docker build \
-            -t ${{ inputs.image-name }}:${{ github.sha }} \
-            ${{ inputs.docker-context }}
+          if [ -n "${{ inputs.dockerfile-repo }}" ] && [ -n "${{ inputs.dockerfile-path }}" ]; then
+            docker build -f dockerfile-repo/${{ inputs.dockerfile-path }} -t ${{ inputs.image-name }}:${{ github.sha }} ${{ inputs.docker-context }}
+          else
+            docker build -t ${{ inputs.image-name }}:${{ github.sha }} ${{ inputs.docker-context }}
+          fi
 
       - name: Trivy image scan
         uses: aquasecurity/trivy-action@0.20.0
