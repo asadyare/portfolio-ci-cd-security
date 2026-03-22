@@ -73,7 +73,7 @@ jobs:
           fi
 
       - name: Trivy image scan
-        uses: aquasecurity/trivy-action@0.20.0
+        uses: aquasecurity/trivy-action@v0.20.0
         with:
           image-ref: ${{ inputs.image-name }}:${{ github.sha }}
           severity: HIGH,CRITICAL
